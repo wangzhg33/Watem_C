@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <Compiler Value="C:\lazarus\fpc\2.6.2\bin\x86_64-win64\fpc.exe" Date="1125670274"/>
+  <Params Value=" -MObjFPC -Scghi -O3 -g -gl -vewnhi -FiD:\SPEROS_V5\Watem_QGIS\lib\x86_64-win64 -FuC:\lazarus\components\lazutils -FuD:\SPEROS_V5\Watem_QGIS\ -FUD:\SPEROS_V5\Watem_QGIS\lib\x86_64-win64\ -l WATEM.lpr"/>
+</CONFIG>

@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="9"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <MainUnitHasCreateFormStatements Value="False"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <MainUnit Value="0"/>
+      <Title Value="Watem"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
+    </General>
+    <i18n>
+      <EnableI18N LFM="False"/>
+    </i18n>
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="1">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+        <CommandLineParams Value="-d &quot;wdtm_40fill.rst&quot; -o &quot;a_out.rst&quot; -p &quot;wparcel_riv.rst&quot; -t &quot;100&quot; -r &quot;mf&quot; -u &quot;wrkcp.rst&quot; -k &quot;wktc.rst&quot; -b &quot;1350&quot;"/>
+      </local>
+    </RunParams>
+    <Units Count="9">
+      <Unit0>
+        <Filename Value="WATEM.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="WATEM"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="gdata.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="gdata"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="idrisi_proc.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Idrisi_Proc"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="lateralredistribution.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="LateralRedistribution"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="rdata.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="RData"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="surface.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="SURFACE"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="vector.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="vector"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="C:\lazarus\components\lazutils\fileutil.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fileutil"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="variables.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="variables"/>
+      </Unit8>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="WATEM"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="C:\lazarus\components\lazutils\"/>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <CodeGeneration>
+      <Optimizations>
+        <OptimizationLevel Value="3"/>
+      </Optimizations>
+    </CodeGeneration>
+    <Other>
+      <CompilerMessages>
+        <MsgFileName Value=""/>
+      </CompilerMessages>
+      <CompilerPath Value="$(CompPath)"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

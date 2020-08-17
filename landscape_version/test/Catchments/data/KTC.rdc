@@ -1,0 +1,24 @@
+file format : IDRISI Raster A.1
+file title  : ktc
+data type   : integer
+file type   : binary
+columns     : 112
+rows        : 96
+ref. system : plane
+ref. units  : m
+unit dist.  : 1.0000000
+min. X      : 2584771.88
+max. X      : 2585471.88
+min. Y      : 5622159.38
+max. Y      : 5622759.38
+pos'n error : unknown
+resolution  : 6.25
+min. value  : 0
+max. value  : 7
+display min : 0
+display max : 7
+value units : unspecified
+value error : unknown
+flag value  : 0
+flag def'n  : no data
+legend cats : 0

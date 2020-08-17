@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <Compiler Value="C:\lazarus\fpc\2.6.2\bin\x86_64-win64\fpc.exe" Date="1120505582"/>
+  <Params Value=" -MObjFPC -Scaghi -CirotR -O3 -g -gl -vewnhi &quot;-FiF:\Geoscientific model development\integrate_model\Watem_Denmark\lib\x86_64-win64&quot; -FuC:\lazarus\components\lazutils &quot;-FuF:\Geoscientific model development\integrate_model\Watem_Denmark\&quot; &quot;-FUF:\Geoscientific model development\integrate_model\Watem_Denmark\lib\x86_64-win64\&quot; -l WATEM_DK.lpr"/>
+</CONFIG>

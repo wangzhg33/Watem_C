@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Default"/>
+    <Units Count="13">
+      <Unit0>
+        <Filename Value="WATEM.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="WATEM"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="0"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="14"/>
+        <CursorPos X="1" Y="68"/>
+        <UsageCount Value="210"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="gdata.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="gdata"/>
+        <EditorIndex Value="2"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="41" Y="11"/>
+        <UsageCount Value="210"/>
+        <Loaded Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="idrisi_proc.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Idrisi_Proc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="118"/>
+        <UsageCount Value="210"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="lateralredistribution.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="LateralRedistribution"/>
+        <EditorIndex Value="3"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="180"/>
+        <CursorPos X="54" Y="201"/>
+        <UsageCount Value="210"/>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="rdata.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="RData"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="67"/>
+        <CursorPos X="34" Y="92"/>
+        <UsageCount Value="210"/>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="surface.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="SURFACE"/>
+        <EditorIndex Value="4"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="82"/>
+        <CursorPos X="12" Y="28"/>
+        <UsageCount Value="210"/>
+        <Loaded Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="vector.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="vector"/>
+        <UsageCount Value="210"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="C:\lazarus\components\lazutils\fileutil.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fileutil"/>
+        <UsageCount Value="210"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="variables.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="variables"/>
+        <EditorIndex Value="5"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="3"/>
+        <CursorPos X="86" Y="41"/>
+        <UsageCount Value="126"/>
+        <Loaded Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="readinparameters.pas"/>
+        <UnitName Value="ReadInParameters"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="72"/>
+        <CursorPos X="4" Y="94"/>
+        <UsageCount Value="199"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\SPEROS_LT\write_output.pas"/>
+        <UnitName Value="Write_Output"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="63" Y="31"/>
+        <UsageCount Value="93"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\SPEROS_LT_TEX\SPEROS_LT_TEX.lps"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="7"/>
+        <DefaultSyntaxHighlighter Value="XML"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\Elisabet GCB\FP console_18_6_2014_final\base.pas"/>
+        <UnitName Value="base"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="40"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="9"/>
+      </Unit12>
+    </Units>
+    <General>
+      <ActiveWindowIndexAtStart Value="0"/>
+    </General>
+    <JumpHistory Count="6" HistoryIndex="5">
+      <Position1>
+        <Filename Value="WATEM.lpr"/>
+        <Caret Line="72" Column="85" TopLine="41"/>
+      </Position1>
+      <Position2>
+        <Filename Value="WATEM.lpr"/>
+        <Caret Line="85" Column="27" TopLine="46"/>
+      </Position2>
+      <Position3>
+        <Filename Value="WATEM.lpr"/>
+        <Caret Line="86" Column="51" TopLine="62"/>
+      </Position3>
+      <Position4>
+        <Filename Value="WATEM.lpr"/>
+        <Caret Line="79" Column="26" TopLine="61"/>
+      </Position4>
+      <Position5>
+        <Filename Value="WATEM.lpr"/>
+        <Caret Line="86" Column="41" TopLine="60"/>
+      </Position5>
+      <Position6>
+        <Filename Value="lateralredistribution.pas"/>
+        <Caret Line="201" Column="54" TopLine="180"/>
+      </Position6>
+    </JumpHistory>
+  </ProjectSession>
+  <Debugging>
+    <BreakPoints Count="2">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="WATEM.lpr"/>
+        <Line Value="95"/>
+      </Item1>
+      <Item2>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="WATEM.lpr"/>
+        <Line Value="68"/>
+      </Item2>
+    </BreakPoints>
+  </Debugging>
+</CONFIG>

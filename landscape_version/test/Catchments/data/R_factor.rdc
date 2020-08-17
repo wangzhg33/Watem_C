@@ -1,0 +1,24 @@
+file format : IDRISI Raster A.1
+file title  : R_factor
+data type   : real
+file type   : binary
+columns     : 112
+rows        : 96
+ref. system : plane
+ref. units  : m
+unit dist.  : 1.0000000
+min. X      : 2584771.88
+max. X      : 2585471.88
+min. Y      : 5622159.38
+max. Y      : 5622759.38
+pos'n error : unknown
+resolution  : 6.25
+min. value  : 40
+max. value  : 40
+display min : 40
+display max : 40
+value units : unspecified
+value error : unknown
+flag value  : 0
+flag def'n  : no data
+legend cats : 0

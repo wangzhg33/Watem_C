@@ -1,0 +1,24 @@
+file format : IDRISI Raster A.1
+file title :
+data type   : real
+filetype    : binary
+columns     : 10
+rows        : 10
+ref. system : plane
+ref. units  : m
+unit dist.  : 1
+min. X      : 2585084.38
+max. X      : 2585146.88
+min. Y      : 5622409.38
+max. Y      : 5622471.88
+posnn error : unknown
+resolution  : 6.25
+min. value  : -0.0000474133958050516
+max. value  : 0.0002665699867066
+display min : -0.0000474133958050516
+display max : 0.0002665699867066
+value units : unspecified
+value error : unknown
+flag value  : none
+flag defnn  : none
+legend cats : 0

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Compiler Value="C:\lazarus\fpc\2.6.4\bin\i386-win32\fpc.exe" Date="1195610990"/>
+  <Params Value=" -MObjFPC -Scghi -O3 -g -gl -l -vewnhibq -FiD:\Dropbox\Emap\Watem\Watem_Denmark\lib\i386-win32 -FuC:\lazarus\components\lazutils -FuD:\Dropbox\Emap\Watem\Watem_Denmark\ -FUD:\Dropbox\Emap\Watem\Watem_Denmark\lib\i386-win32\ WATEM_DK_buffer.lpr"/>
+</CONFIG>

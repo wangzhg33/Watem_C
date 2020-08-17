@@ -1,0 +1,2 @@
+Parcel_ID	Gross Erosion (m3)	Gross Depo (m3)	m2 Ero	m2 depo	Net Ero (m3)	Average IR/R Ratio
+7	0	0	0	123867.1875	0	0

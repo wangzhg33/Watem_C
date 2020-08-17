@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="9"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <MainUnitHasCreateFormStatements Value="False"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <MainUnit Value="0"/>
+      <Title Value="WATEM_DK"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
+    </General>
+    <i18n>
+      <EnableI18N LFM="False"/>
+    </i18n>
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="1">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+        <CommandLineParams Value="-dir &quot;F:\Geoscientific model development\integrate_model\calibration\Catchments\data&quot; -o output -d DEM.rst -p LAND_USE.rst -u RKP.rst -c C_factor.rst -k KTC.rst -MC_f 1 -t 100 -r mf -b 1400 -ktil 0 -pdep 25 -frac 0 -w 1 -w_d_exp 0 -c14input C14input.txt -c13input C13input.txt -Cs137input Cs137_input.txt"/>
+      </local>
+    </RunParams>
+    <Units Count="13">
+      <Unit0>
+        <Filename Value="WATEM_DK.lpr"/>
+        <IsPartOfProject Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="gdata.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="gdata"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="idrisi_proc.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Idrisi_Proc"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="lateralredistribution.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="LateralRedistribution"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="rdata.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="RData"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="surface.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="SURFACE"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="vector.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="C:\lazarus\components\lazutils\fileutil.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="variables.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="variables"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="stat_output.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="tillage.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="carboncycling.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="CarbonCycling"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="model_implementation.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="model_implementation"/>
+      </Unit12>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="WATEM_DK"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="C:\lazarus\components\lazutils\"/>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <IncludeAssertionCode Value="True"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <Checks>
+        <IOChecks Value="True"/>
+        <RangeChecks Value="True"/>
+        <OverflowChecks Value="True"/>
+        <StackChecks Value="True"/>
+      </Checks>
+      <VerifyObjMethodCallValidity Value="True"/>
+      <Optimizations>
+        <OptimizationLevel Value="3"/>
+      </Optimizations>
+    </CodeGeneration>
+    <Other>
+      <CompilerPath Value="$(CompPath)"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

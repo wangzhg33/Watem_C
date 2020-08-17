@@ -1,0 +1,301 @@
+program WATEM_DK;
+
+{$mode objfpc}{$H+}
+
+uses
+  {$IFDEF UNIX}{$IFDEF UseCThreads}
+  cthreads,
+  {$ENDIF}{$ENDIF}
+  Classes, SysUtils, fileutil, Dos, gdata, idrisi_proc, lateralredistribution,
+  rdata, surface, vector, CustApp, variables, Stat_output, tillage,
+  CarbonCycling, model_implementation;
+
+type
+
+  { TWATEMApplication }
+
+  TWATEMApplication = class(TCustomApplication)
+  protected
+    procedure DoRun; override;
+  public
+    constructor Create(TheOwner: TComponent); override;
+    destructor Destroy; override;
+    procedure WriteHelp; virtual;
+    procedure Set_Parameter_Values; virtual;
+  end;
+
+{ TWATEMApplication }
+
+var
+//execution var
+  hr, mins, se, s1 : word;
+
+
+procedure StartClock;
+begin
+  GetTime (hr,mins,se,s1);
+end;
+
+Function StopClock:string;
+var
+  hr2, min2, se2  : word;
+begin
+  GetTime (hr2, min2, se2, s1);
+  result := inttostr(se2-se+(min2-mins)*60+(hr2-hr)*60*60);
+end;
+
+Procedure TWATEMApplication.Set_Parameter_Values;
+begin
+  if Hasoption('dir') then Working_Dir:=GetOptionValue('dir');
+  SetCurrentDir(Working_Dir);
+  if Hasoption('c14input') then c14filename:=GetOptionValue('c14input');
+  if Hasoption('c13input') then c13filename:=GetOptionValue('c13input');
+  if Hasoption('Cs137input') then Cs137filename:= GetOptionValue('Cs137input');
+  if Hasoption('d','dtm') then dtmfilename:=GetOptionValue('d','dtm');
+  if Hasoption('p','prc') then prcfilename:=GetOptionValue('p','prc');
+  if Hasoption('u','RKCP') then RKCPfilename:=GetOptionValue('u','RKCP');
+  if Hasoption('k','ktc') then ktcfilename:=GetOptionValue('k','ktc');
+  if Hasoption('o','outf') then outfilename:=GetOptionValue('o','outf') else outfilename:='watem_out.rst';
+  if Hasoption('t','tfca') then TFCA:=strtoint(GetOptionValue('t','tfca')) else TFCA:=100;
+  if Hasoption('ktil') then KTIL:=strtoint(GetOptionValue('ktil')) else KTIL:=0;
+  if Hasoption('pdep') then PDEPTH:=strtoint(GetOptionValue('pdep')) else PDEPTH:=25;
+  if Hasoption('r','ra') then
+   begin
+   if GetOptionValue('r','ra')='sd' then ra:=sdra else
+      if GetOptionValue('r','ra')='mf' then ra:=mfra;
+   end   else ra:=mfra;
+  if Hasoption('b','BD') then BD:=strtoint(GetOptionValue('b','BD')) else BD:=1350;  // unit kg/m3
+  if Hasoption('m','MC_f') then McCool_factor:=strtofloat(GetOptionValue('m','MC_f')) else McCool_factor:=1.0;
+
+  Cal_Frac:=false;
+  if Hasoption('f','frac') then
+   begin
+    if (GetOptionValue('f','frac')='1') then begin Cal_Frac:=true; ra:=sdra; end //only do fraction calculations with steep descent algorithm
+    else Cal_Frac:=false;
+   end;
+
+  Write_map:=true;
+  if Hasoption('w','write_output') then
+   begin
+    if (GetOptionValue('w','Write_map')='1') then  Write_map:=true
+    else Write_map:=false;
+   end;
+
+   Write_txt:=false;
+  if Hasoption('w','write_output') then
+   begin
+    if (GetOptionValue('w','Write_map')='1') then  Write_map:=true
+    else Write_map:=false;
+   end;
+
+  Write_detail_Exp:=true;
+  if Hasoption('w_d_exp') then
+   begin
+    if (GetOptionValue('w_d_exp')='1') then  Write_detail_Exp:=true
+    else Write_detail_Exp:=false;
+   end;
+
+  Parcel_File_Format:=INT2S;
+  if Hasoption('Par_Data_Type') then
+   begin
+    if (GetOptionValue('Par_Data_Type')='INT2S') then  Parcel_File_Format:=INT2S
+    else if (GetOptionValue('Par_Data_Type')='INT4S') then  Parcel_File_Format:=INT4S;
+   end;
+
+  if Hasoption('erosion_start_year') then erosion_start_year:=strtoint(GetOptionValue('erosion_start_year')) else erosion_start_year:=2000;
+  if Hasoption('erosion_end_year') then erosion_end_year:=strtoint(GetOptionValue('erosion_end_year')) else erosion_end_year:=2050;
+
+  // variables for C cycling
+  if Hasoption('depth_interval') then depth_interval:=strtoint(GetOptionValue('depth_interval')) else depth_interval:=5;
+  if Hasoption('depth') then depth:=strtoint(GetOptionValue('depth')) else depth:=150;
+
+  layer_num:=round(depth/depth_interval);
+
+  if Hasoption('tillage_depth') then tillage_depth:=strtoint(GetOptionValue('tillage_depth')) else tillage_depth:=25;
+
+  if Hasoption('time_equilibrium') then time_equilibrium:=strtoint(GetOptionValue('time_equilibrium')) else time_equilibrium:=1000;
+  if Hasoption('deltaC13_ini_top') then deltaC13_ini_top:=strtofloat(GetOptionValue('deltaC13_ini_top')) else deltaC13_ini_top:=-27.0;
+  if Hasoption('deltaC13_ini_bot') then deltaC13_ini_bot:=strtofloat(GetOptionValue('deltaC13_ini_bot')) else deltaC13_ini_bot:=-25.0;
+  if Hasoption('deltaC14_ini_top') then deltaC14_ini_top:=strtofloat(GetOptionValue('deltaC14_ini_top')) else deltaC14_ini_top:=50.0;
+  if Hasoption('deltaC14_ini_bot') then deltaC14_ini_bot:=strtofloat(GetOptionValue('deltaC14_ini_bot')) else deltaC14_ini_bot:=-500.0;
+  if Hasoption('k1') then k1:=strtofloat(GetOptionValue('k1')) else k1:=2.1;
+  if Hasoption('k2') then k2:=strtofloat(GetOptionValue('k2')) else k2:=0.03;
+  if Hasoption('k3') then k3:=strtofloat(GetOptionValue('k3')) else k3:=0.005;
+  if Hasoption('hAS') then hAS:=strtofloat(GetOptionValue('hAS')) else hAS:=0.12;
+  if Hasoption('hAP') then hAP:=strtofloat(GetOptionValue('hAP')) else hAP:=0.02;
+  if Hasoption('hSP') then hSP:=strtofloat(GetOptionValue('hSP')) else hSP:=0.02;
+  if Hasoption('r0') then r0:=strtofloat(GetOptionValue('r0')) else r0:=1;
+  if Hasoption('C_input') then C_input:=strtofloat(GetOptionValue('C_input')) else C_input:=0.7;// input from root
+  if Hasoption('C_input2') then C_input2:=strtofloat(GetOptionValue('C_input2')) else C_input2:=0.5;// input from manure, residue
+  if Hasoption('r_exp') then r_exp:=strtofloat(GetOptionValue('r_exp')) else r_exp:=3.30;
+  if Hasoption('i_exp') then i_exp:=strtofloat(GetOptionValue('i_exp')) else i_exp:=6;
+  if Hasoption('C13_discri') then C13_discri:=strtofloat(GetOptionValue('C13_discri')) else C13_discri:=0.9985;
+  if Hasoption('C14_discri') then C14_discri:=strtofloat(GetOptionValue('C14_discri')) else C14_discri:=0.9985;
+  if Hasoption('deltaC13_input_default') then deltaC13_input_default:=strtofloat(GetOptionValue('deltaC13_input_default')) else deltaC13_input_default:=-30.0;
+  if Hasoption('deltaC14_input_default') then deltaC14_input_default:=strtofloat(GetOptionValue('deltaC14_input_default')) else deltaC14_input_default:=100.0;
+  if Hasoption('Cs137_input_default') then Cs137_input_default:=strtofloat(GetOptionValue('Cs137_input_default')) else Cs137_input_default:=0.0;
+
+  if Hasoption('Sand_ini_top') then Sand_ini_top:=strtofloat(GetOptionValue('Sand_ini_top')) else Sand_ini_top:=15;
+  if Hasoption('Silt_ini_top') then Silt_ini_top:=strtofloat(GetOptionValue('Silt_ini_top')) else Silt_ini_top:=70;
+  if Hasoption('Clay_ini_top') then Clay_ini_top:=strtofloat(GetOptionValue('Clay_ini_top')) else Clay_ini_top:=15;
+  if Hasoption('Sand_ini_bot') then Sand_ini_bot:=strtofloat(GetOptionValue('Sand_ini_bot')) else Sand_ini_bot:=15;
+  if Hasoption('Silt_ini_bot') then Silt_ini_bot:=strtofloat(GetOptionValue('Silt_ini_bot')) else Silt_ini_bot:=70;
+  if Hasoption('Clay_ini_bot') then Clay_ini_bot:=strtofloat(GetOptionValue('Clay_ini_bot')) else Clay_ini_bot:=15;
+
+  if Hasoption('K0') then K0:=strtofloat(GetOptionValue('K0')) else K0:=0.5;
+  if Hasoption('Kfzp') then Kfzp:=strtofloat(GetOptionValue('Kfzp')) else Kfzp:=0.15;
+  if Hasoption('v0') then v0:=strtofloat(GetOptionValue('v0')) else v0:=0.2;
+  if Hasoption('vfzp') then vfzp:=strtofloat(GetOptionValue('vfzp')) else vfzp:=0.15;
+
+  if Hasoption('a_erero') then a_erero:=strtofloat(GetOptionValue('a_erero')) else a_erero:=1.0;
+  if Hasoption('b_erero') then b_erero:=strtofloat(GetOptionValue('b_erero')) else b_erero:=2000.0;
+  if Hasoption('b_erdepo') then b_erdepo:=strtofloat(GetOptionValue('b_erdepo')) else b_erdepo:=-4000.0;
+
+  if Hasoption('time_step') then time_step:=strtoint(GetOptionValue('time_step')) else time_step:=5;
+
+  C_input:=C_input*time_step;
+  C_input2:=C_input2*time_step;
+  k1:=k1*time_step;
+  k2:=k2*time_step;
+  k3:=k3*time_step;
+
+  K0:=K0*time_step;
+  v0:=v0*time_step;
+
+  unstable:=FALSE;
+
+end;
+
+procedure TWATEMApplication.DoRun;
+var
+  Time:String;
+  ErrorMsg: String;
+  i: integer;
+begin
+
+StartClock;
+writeln('WATEM V4 BETA version DK Jan 2016');
+writeln('Reference: Van Oost et al 2000, Landscape Ecology');
+Set_Parameter_Values;
+
+writeln('Reading data from: ',GetCurrentDir);
+GetRFile(DTM,dtmfilename);
+write('Dem ');
+GetRFile(RKCP,RKCPfilename);
+write('RKCP ');
+GetGFile(ktc,ktcfilename);
+write('ktc ');
+If Parcel_File_Format=INT4S then
+  Get32bitGFile(LS,prcfilename,PRC)
+  else GetGFile(PRC,prcfilename);
+writeln('PRC ');
+write('Allocating Memory');
+Allocate_Memory;
+writeln(': Done');
+
+//CalculateSlopeAspect;
+writeln('Topo calculations');
+Topo_Calculations(ra,DTM, LS, SLOPE, ASPECT, UPAREA, TFCA);
+ If Write_map then writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'_LS', LS);
+
+writeln('Water Erosion Module');
+outfilename_temp:=outfilename;
+
+//Water(WATEREROS,A12_eros, S12_eros, P12_eros, LS, RKCP, ktc, TFCA, ra, BD);
+
+//Carbon_Initilization;
+
+Carbon;
+
+write_txt:=TRUE;
+if write_txt then
+export_txt;
+
+//test_AD;
+
+writeln('Writing Output: Maps');
+If Write_map then
+ begin
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/Werodep_in_m', WATEREROS);
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/WExport_in_m', W_Export);
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/C_stock', C_stock);
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/A12_erosion', A12_EROS);
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/S12_erosion', S12_EROS);
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/P12_erosion', P12_EROS);
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/A13_erosion', A13_EROS);
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/S13_erosion', S13_EROS);
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/P13_erosion', P13_EROS);
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/A14_erosion', A14_EROS);
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/S14_erosion', S14_EROS);
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/P14_erosion', P14_EROS);
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/A14_erosion', Clay_EROS);
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/S14_erosion', Silt_EROS);
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/P14_erosion', Sand_EROS);
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/P14_erosion', Rock_EROS);
+  writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/CS137_activity', CS137_ACTIVITY);
+
+  for  i:=1 to layer_num do
+     begin
+        writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/A12_'+inttostr(i), A12[i]);
+        writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/S12_'+inttostr(i), S12[i]);
+        writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/P12_'+inttostr(i), P12[i]);
+        writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/A13_'+inttostr(i), A13[i]);
+        writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/S13_'+inttostr(i), S13[i]);
+        writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/P13_'+inttostr(i), P13[i]);
+        writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/A14_'+inttostr(i), A14[i]);
+        writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/S14_'+inttostr(i), S14[i]);
+        writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/P14_'+inttostr(i), P14[i]);
+        writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/CLAY_'+inttostr(i), CLAY[i]);
+        writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/SILT_'+inttostr(i), SILT[i]);
+        writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/SAND_'+inttostr(i), SAND[i]);
+        writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/ROCK_'+inttostr(i), ROCK[i]);
+        writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'/CS137_'+inttostr(i), CS137[i]);
+
+     end;
+
+end;
+writeln('Writing Output: Summary Statistics');
+Write_STAT(WATEREROS, outfilename+'STAT_Water');
+
+if KTIL>0 then
+ begin
+  writeln('Tillage Erosion Module');
+  tillage_dif;
+  if Write_map then writeIdrisi32file(ncol,nrow, ChangeFileExt(outfilename,'')+'_Terodep_in_m', TILEROS);
+  Write_STAT(TILEROS, ChangeFileExt(outfilename,'')+'STAT_Tillage');
+ end;
+
+writeln('Releasing Memory');
+
+Release_Memory;
+Time:=StopClock;
+  Writeln('Program Execution Time: ',Time,' sec');
+
+Terminate;
+end;
+
+constructor TWATEMApplication.Create(TheOwner: TComponent);
+begin
+  inherited Create(TheOwner);
+  StopOnException:=True;
+end;
+
+destructor TWATEMApplication.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TWATEMApplication.WriteHelp;
+begin
+  { add your help code here }
+  writeln('Usage: ',ExeName,' -h');
+end;
+
+var
+  Application: TWATEMApplication;
+begin
+  Application:=TWATEMApplication.Create(nil);
+  Application.Run;
+  Application.Free;
+end.
+

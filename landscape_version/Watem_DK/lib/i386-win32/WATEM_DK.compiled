@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Compiler Value="C:\lazarus\fpc\2.6.4\bin\i386-win32\fpc.exe" Date="1184004117"/>
+  <Params Value=" -MObjFPC -Scaghi -CirotR -O3 -g -gl -l -vewnhibq -FiD:\ZhengangW\integrate_model\Watem_Denmark\lib\i386-win32 -FuC:\lazarus\components\lazutils -FuD:\ZhengangW\integrate_model\Watem_Denmark\ -FUD:\ZhengangW\integrate_model\Watem_Denmark\lib\i386-win32\ WATEM_DK.lpr"/>
+</CONFIG>
